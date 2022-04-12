@@ -1,0 +1,14 @@
+# On node compute
+
+- install nova compute
+apt install nova-compute
+
+- konfigurasi nova
+vim /etc/nova/nova.conf
+vim /etc/nova/nova-compute.conf
+systemctl restart nova-compute
+
+# On node controller
+
+- sync file
+su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
