@@ -1,9 +1,0 @@
-# On node controller
-
-- install glance
-apt install glance
-
-- konfigurasi glance
-vim /etc/glance/glance-api.conf
-su -s /bin/sh -c "glance-manage db_sync" glance
-systemctl restart glance-api
