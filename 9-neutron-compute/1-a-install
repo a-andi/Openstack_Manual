@@ -1,0 +1,15 @@
+# On node compute
+
+- install linuxbridge agent
+apt install neutron-linuxbridge-agent python3-neutron-fwaas
+
+- konfigurasi neutron
+vim /etc/neutron/neutron.conf
+vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+
+- konfigurasi nova
+vim /etc/nova/nova.conf
+
+- restart service
+systemctl restart nova-compute
+systemctl restart neutron-linuxbridge-agent
