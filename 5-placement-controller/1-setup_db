@@ -1,0 +1,9 @@
+# On node controller
+
+mysql
+CREATE DATABASE placement;
+GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'localhost' \
+  IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'%' \
+  IDENTIFIED BY 'password';
+flush privileges;
