@@ -1,0 +1,14 @@
+# on controller
+
+ mkdir tempalte
+cd tempalte/
+openstack keypair list
+openstack image list
+openstack plavor list
+
+vi tempalte1.yml
+openstack stack create -t tempalte1.yml contoh-tempalte
+
+tail -f /var/log/heat/heat-engine.log
+
+openstack server list
