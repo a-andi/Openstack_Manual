@@ -1,0 +1,11 @@
+# On node controller
+
+- install openstack dashboard
+apt install openstack-dashboard
+
+- konfigurasi
+vim /etc/openstack-dashboard/local_settings.py 
+systemctl reload apache2.service
+
+- verifikasi
+http://10.30.100.1/horizon
