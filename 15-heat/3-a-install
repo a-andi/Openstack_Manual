@@ -5,6 +5,10 @@ apt-get install heat-api heat-api-cfn heat-engine && pip install python-vitragec
 
 - konfigurasi heat
 vim /etc/heat/heat.conf
+
+- sync file
+su -s /bin/sh -c "heat-manage db_sync" heat
+
 systemctl restart heat*
 
 - verifikasi
