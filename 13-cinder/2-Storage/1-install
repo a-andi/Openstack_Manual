@@ -1,0 +1,11 @@
+# On node storage
+
+- install cinder-volume
+apt install cinder-volume
+
+- konfigurasi cinder
+vim /etc/cinder/cinder.conf
+
+- restart service
+service tgt restart
+systemctl restart cinder-volume
