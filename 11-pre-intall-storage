@@ -1,0 +1,32 @@
+# On node storage
+- update & upgrade
+apt clean all && apt update -y && apt upgrade -y
+apt autoremove
+
+- add repository
+add-apt-repository cloud-archive:victoria
+
+- set static ens160 & ens192
+vim /etc/netplan/00-installer-config.yaml
+netplan apply
+
+- set hostname
+hostnamectl set-hostname storage
+
+- set /etc/hosts
+#...
+10.30.100.1 controller
+10.30.100.2 compute
+10.30.100.3 storage
+
+- set date/timezone
+timedatectl set-timedate Asia/Jakarta
+
+- install ntp client
+apt install chrony
+vim /etc/chrony/chrony.conf
+#...
+server controller iburst
+#...
+systemctl restart chrony
+chronyc sources
