@@ -13,4 +13,4 @@ openstack server remove volume vm_id vol-id
 openstack volume set --size 10 vol1
 
 - delete volume
-openstack volume set --size 5 vol1
+openstack volume delete vol1
