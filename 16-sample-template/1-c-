@@ -1,0 +1,43 @@
+heat_template_version: 2015-10-15
+
+resources:
+  web_secgroup:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      rules:
+        - protocol: icmp
+          remote_ip_prefix: 0.0.0.0/0
+        - protocol: tcp
+          remote_ip_prefix: 0.0.0.0/0
+          port_range_min: 22
+          port_range_max: 22
+
+  volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 2
+
+
+  instance_port:
+    type: OS::Neutron::Port
+    properties:
+      network: public
+      security_groups:
+        - default
+        - { get_resource: web_secgroup }
+      fixed_ips:
+        - subnet_id: public-net
+
+  instance:
+    type: OS::Nova::Server
+    properties:
+      flavor: m1.small
+      image: cirros
+      networks:
+        - port: { get_resource: instance_port }
+
+  volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: volume }
+      instance_uuid: { get_resource: instance }
