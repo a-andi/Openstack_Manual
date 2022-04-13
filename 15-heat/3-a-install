@@ -1,0 +1,11 @@
+# On node controller
+
+- install heat
+apt-get install heat-api heat-api-cfn heat-engine && pip install python-vitrageclient>=2.7.0 && pip install python-zunclient
+
+- konfigurasi heat
+vim /etc/heat/heat.conf
+systemctl restart heat*
+
+- verifikasi
+openstack orchestration service list
