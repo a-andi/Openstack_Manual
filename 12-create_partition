@@ -1,0 +1,8 @@
+# On node storage
+
+- install lvm
+apt install lvm2 thin-provisioning-tools
+
+- create volume 
+pvcreate /dev/sdb
+vgcreate cinder-volumes /dev/sdb
