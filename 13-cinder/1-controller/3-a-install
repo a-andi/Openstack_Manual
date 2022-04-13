@@ -1,0 +1,19 @@
+# On node controller
+
+- install cinder
+apt install cinder-api cinder-scheduler
+
+- konfigurasi cinder
+vim /etc/cinder/cinder.conf
+su -s /bin/sh -c "cinder-manage db sync" cinder
+
+- konfigurasi nova
+vim /etc/nova/nova.conf
+
+- restart service 
+systemctl restart nova-api
+systemctl restart cinder-scheduler
+systemctl restart apache2
+
+- verifikasi
+openstack volume service list
