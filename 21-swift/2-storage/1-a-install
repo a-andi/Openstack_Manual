@@ -1,0 +1,34 @@
+# On node storage
+
+- install swift
+apt -y install swift swift-account swift-container swift-object xfsprogs 
+
+- create partition
+mkfs.xfs /dev/sdc
+mkfs.xfs /dev/sdd
+mkfs.xfs /dev/sde
+
+- mounting partition
+mkdir -p /srv/node/sdc
+mkdir -p /srv/node/sdd
+mkdir -p /srv/node/sde
+
+mount /dev/sdc /srv/node/sdc
+mount /dev/sdd /srv/node/sdd
+mount /dev/sde /srv/node/sde
+
+chown -R swift. /srv/node 
+
+- copy file ring 
+cd /home/user
+mv *.gz /etc/swift/
+chown swift. /etc/swift/*.gz
+
+- konfigurasi file
+vim /etc/swift/swift.conf
+vim /etc/rsyncd.conf
+vim /etc/default/rsync
+
+- restart service
+systemctl restart rsync swift-account-auditor swift-account-replicator swift-account swift-container-auditor swift-container-replicator swift-container-updater swift-container swift-object-auditor swift-object-replicator swift-object-updater swift-object
+systemctl enable rsync swift-account-auditor swift-account-replicator swift-account swift-container-auditor swift-container-replicator swift-container-updater swift-container swift-object-auditor swift-object-replicator swift-object-updater swift-object
