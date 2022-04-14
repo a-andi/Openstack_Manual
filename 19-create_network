@@ -1,5 +1,9 @@
 # On node controller
 
+openstack network list
+openstack network show (ID)
+
+
 - enable external public
 openstack network set --external public
 
