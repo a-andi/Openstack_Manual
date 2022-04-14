@@ -1,0 +1,15 @@
+# On node controller
+
+- install swift
+apt-get install swift swift-proxy python3-swiftclient \
+  python3-keystoneclient python3-keystonemiddleware \
+  memcached
+
+- konfigurasi swift-proxy
+vim /etc/swift/proxy-server.conf
+
+- konfigurasi swift
+vim /etc/swift/swift.conf 
+
+- ubah permission
+chown -R swift. /etc/swift 
