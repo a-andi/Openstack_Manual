@@ -1,0 +1,29 @@
+# On node controller
+
+- enable external public
+openstack network set --external public
+
+- create network and private subnet
+openstack network create private --provider-network-type vxlan
+openstack subnet create private-subnet --network private \
+--subnet-range 10.10.10.0/24 --gateway 10.10.10.254 \
+--allocation-pool start=10.10.10.1,end=10.10.10.20 \
+
+- create router
+openstack router create router01
+
+- attach interface to router
+openstack router add subnet router01 private-subnet 
+
+- external gateway router
+openstack router set router01 --external-gateway public 
+
+- create floating ip 
+openstack floating ip create public 
+
+- create instance private
+openstack server create --flavor m1.small --image cirros --security-group SG_Rafi --nic net-id=$private --key-name rafi_key private-vm
+
+- attach floating ip to instance
+openstack server add floating ip private-vm $floating_ip
+openstack floating ip show $floating_ip
