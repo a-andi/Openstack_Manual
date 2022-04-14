@@ -1,0 +1,46 @@
+# On node controller 
+
+- install octavia
+apt install octavia-api octavia-health-manager octavia-housekeeping \
+  octavia-worker python3-octavia python3-octaviaclient
+pip install --upgrade pyasn1-modules 
+
+- generate certificates ssl
+cd octavia/bin
+./create_dual_intermediate_CA.sh
+
+- copy certificates to octavia
+mkdir -p /etc/octavia/certs/private
+chmod 755 /etc/octavia/ -R
+
+cd dual_ca/
+cp -p etc/octavia/certs/server_ca.cert.pem /etc/octavia/certs
+cp -p etc/octavia/certs/server_ca-chain.cert.pem /etc/octavia/certs
+cp -p etc/octavia/certs/server_ca.key.pem /etc/octavia/certs/private
+cp -p etc/octavia/certs/client_ca.cert.pem /etc/octavia/certs
+cp -p etc/octavia/certs/client.cert-and-key.pem /etc/octavia/certs/private
+chmod 755 /etc/octavia/ -R
+
+- login octavia
+vim octavia-rc
+source octavia-rc
+
+- create security group
+openstack security group create lb-mgmt-sec-grp
+openstack security group rule create --protocol icmp lb-mgmt-sec-grp
+openstack security group rule create --protocol tcp --dst-port 22 lb-mgmt-sec-grp
+openstack security group rule create --protocol tcp --dst-port 9443 lb-mgmt-sec-grp
+openstack security group create lb-health-mgr-sec-grp
+openstack security group rule create --protocol udp --dst-port 5555 lb-health-mgr-sec-grp
+
+- create keypair
+openstack keypair create --public-key ~/.ssh/id_rsa.pub mykey
+
+- konfigurasi octavia
+vim  /etc/octavia/octavia.conf
+
+- sync file
+octavia-db-manage --config-file /etc/octavia/octavia.conf upgrade head
+
+- restart service
+systemctl restart octavia-api octavia-health-manager octavia-housekeeping octavia-worker
