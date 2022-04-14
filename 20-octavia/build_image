@@ -1,0 +1,19 @@
+# On node controller
+
+- git clone automation create image
+git clone https://github.com/openstack/octavia
+
+- install requirement dependecies
+apt install  qemu-utils git kpartx debootstrap
+
+cd octavia/diskimage-create
+pip install -r requirements.txt
+
+- build image
+./diskimage-create.sh
+
+- upload image to glance
+openstack image create --disk-format qcow2 --container-format bare   --private --tag amphora   --file amphora-x64-haproxy.qcow2 amphora-x64-haproxy
+
+- create flavor
+openstack flavor create --id 200 --vcpus 1 --ram 1024   --disk 2 "amphora" --private
