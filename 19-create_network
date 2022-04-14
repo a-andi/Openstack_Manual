@@ -1,9 +1,5 @@
 # On node controller
 
-openstack network list
-openstack network show (ID)
-
-
 - enable external public
 openstack network set --external public
 
@@ -24,6 +20,12 @@ openstack router set router01 --external-gateway public
 
 - create floating ip 
 openstack floating ip create public 
+
+
+
+openstack network list
+openstack network show (ID)
+
 
 - create instance private
 openstack server create --flavor m1.small --image cirros --security-group SG_Rafi --nic net-id=$private --key-name rafi_key private-vm
