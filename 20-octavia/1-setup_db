@@ -1,0 +1,10 @@
+# On node controller
+
+mysql
+CREATE DATABASE octavia;
+GRANT ALL PRIVILEGES ON octavia.* TO 'octavia'@'localhost' \
+IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON octavia.* TO 'octavia'@'%' \
+IDENTIFIED BY 'password';
+flush privileges;
+exit;
